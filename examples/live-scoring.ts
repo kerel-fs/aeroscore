@@ -4,6 +4,7 @@ import {Fix} from '../src/read-flight';
 import {readTask} from '../src/read-task';
 import RacingTaskSolver from '../src/task/solver/racing-task-solver';
 import {readCSV} from './utils/read-csv';
+import {formatTime} from '../src/format-result';
 
 const logUpdate = require('log-update');
 
@@ -90,16 +91,20 @@ client.onRecord = function(record) {
 setInterval(() => {
   let lines = Object.keys(flarmIds).map(flarmId => {
     let flarmMapping = flarmIds[flarmId];
+
     let fixes = fixesById.get(flarmId)!;
 
     let solver = new RacingTaskSolver(task);
     solver.consume(fixes);
     let result = solver.result;
 
+    let cn = flarmMapping.cn != '' ? flarmMapping.cn : flarmId.slice(-2);
     let distance = result.distance !== undefined ? `${(result.distance / 1000).toFixed(1)} km` : '';
     let speed = result.speed !== undefined ? `${(result.speed).toFixed(2)} km/h` : '';
+    let start_time = result.latest_start_time !== undefined ? formatTime(result.latest_start_time) : '';
+    let events = solver.events;
 
-    return `${flarmMapping.cn}\t${distance}\t${speed}`;
+    return `${cn}\t${distance}\t${start_time.slice(11,19)}\t${speed}`;
   });
 
   logUpdate(`${new Date().toISOString()}\n\n${lines.join('\n')}`);

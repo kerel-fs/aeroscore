@@ -113,6 +113,7 @@ export default class RacingTaskSolver {
       time,
       distance,
       speed,
+      latest_start_time: path ? path.path[0].time : undefined,
     };
   }
 }
