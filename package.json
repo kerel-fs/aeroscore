@@ -28,6 +28,7 @@
     "igc-filename-parser": "^0.1.1",
     "igc-parser": "^0.4.0",
     "monotone-convex-hull-2d": "^1.0.1",
+    "node-vincenty": "^0.0.6",
     "tiny-emitter": "^2.0.2",
     "xml-js": "^1.6.7"
   },

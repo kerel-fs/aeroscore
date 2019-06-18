@@ -1,6 +1,8 @@
 import turfBBox from '@turf/bbox';
 const turfCenter = require('@turf/center').default;
 const turfDistance = require('@turf/distance').default;
+var vincenty = require('node-vincenty');
+
 import * as turf from '@turf/helpers';
 import cheapRuler = require('cheap-ruler');
 
@@ -45,7 +47,7 @@ export default class Task {
       let last = points[i - 1].shape.center;
       let current = points[i].shape.center;
 
-      let distance = turfDistance(last, current) * 1000;
+      let distance = vincenty.distVincenty(last[1], last[0], current[1], current[0]).distance;
       let bearing = this._ruler.bearing(last, current);
 
       this.legs.push({ distance, bearing });
@@ -78,7 +80,7 @@ export default class Task {
    * Calculates the distance from `a` to `b`
    */
   measureDistance(a: Point, b: Point): number {
-    return turfDistance(a, b);
+    return vincenty.distVincenty(a[1], a[0], b[1], b[0]).distance / 1000;
   }
 
   private _calcDistance() {

@@ -2403,6 +2403,11 @@ node-pre-gyp@^0.12.0:
     semver "^5.3.0"
     tar "^4"
 
+node-vincenty@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/node-vincenty/-/node-vincenty-0.0.6.tgz#ce4fd5e769ace94fc02f6b222465b0168d0695ba"
+  integrity sha1-zk/V52ms6U/AL2siJGWwFo0Glbo=
+
 nopt@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/nopt/-/nopt-4.0.1.tgz#d0d4685afd5415193c8c7505602d0d17cd64474d"
