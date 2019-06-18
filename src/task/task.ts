@@ -96,9 +96,10 @@ export default class Task {
       distance -= this.start.shape.radius;
     }
 
-    if (this.finish.shape instanceof Cylinder) {
-      distance -= this.finish.shape.radius;
-    }
+    // NOTE: SoaringSpot doesn't implement this.
+    // if (this.finish.shape instanceof Cylinder) {
+    //   distance -= this.finish.shape.radius;
+    // }
 
     return distance;
   }
