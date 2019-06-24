@@ -1,7 +1,7 @@
 const tempWrite = require('temp-write');
 const opn = require('opn');
 
-export function viewGeoJSON(json: any) {
+export function viewGeoJSON(geojson: any, enls: number[], enl_times: Date[]) {
   let html = `<html>
 <head>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css"/>
@@ -10,12 +10,18 @@ export function viewGeoJSON(json: any) {
   #mapid { height: 100%; }
   </style>
 </head>
-<body id="map">
-  <div id="mapid"></div>
+<body>
+  <div id="map">
+    <div id="mapid"></div>
+  </div>
+  <div id="baro">
+  </div>
+
   <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"></script>
   <script src='https://unpkg.com/@turf/turf/turf.min.js'></script>
+  <script src='https://unpkg.com/plotly.js@1.48.3/dist/plotly.min.js'></script>
   <script>
-  var json = ${JSON.stringify(json)};
+  var json = ${JSON.stringify(geojson)};
   var bbox = turf.bbox(json);
 
   var map = L.map('map').fitBounds([
@@ -37,6 +43,20 @@ export function viewGeoJSON(json: any) {
       };
     }
   }).addTo(map);
+
+
+var enls = ${JSON.stringify(enls)};
+var enl_times = ${JSON.stringify(enl_times)};
+
+var trace1 = {
+  x: enl_times,
+  y: enls,
+  type: 'scatter'
+};
+
+var data = [trace1];
+
+Plotly.newPlot('baro', data);
   </script>
 </body>
 </html>`;

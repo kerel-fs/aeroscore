@@ -8,6 +8,7 @@ export interface Fix {
   coordinate: Point;
   valid: boolean;
   altitude: number | null;
+  enl: number | null;
 }
 
 export function readFlightFromString(str: string): Fix[] {
@@ -16,6 +17,7 @@ export function readFlightFromString(str: string): Fix[] {
     coordinate: [fix.longitude, fix.latitude] as Point,
     valid: fix.valid,
     altitude: fix.gpsAltitude,
+    enl: fix.enl,
   }));
 }
 

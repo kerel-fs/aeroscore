@@ -21,9 +21,16 @@ let flightPath = process.argv[3];
 let flight = readFlight(flightPath);
 
 let points: Point[] = [];
+let enls: number[] = [];
+let enl_times: Date[] = [];
+
 for (let i = 1; i < flight.length; i++) {
   let lastFix = flight[i - 1];
   let fix = flight[i];
+  if (fix.enl) {
+    enl_times.push(new Date(fix.time));
+    enls.push(fix.enl);
+  }
 
   task.points.forEach(point => {
     let shape = point.shape;
@@ -39,9 +46,10 @@ for (let i = 1; i < flight.length; i++) {
     }
   });
 }
+console.log(enl_times);
 
 let json = taskToGeoJSON(task);
 json.features.push(turf.lineString(flight.map(it => it.coordinate), { color: 'red', opacity: 0.85 }));
 json.features.push(turf.multiPoint(points, { color: 'red', opacity: 0.85 }));
 
-viewGeoJSON(json);
+viewGeoJSON(json, enls, enl_times);
